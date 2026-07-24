@@ -11,7 +11,11 @@ API_URL = "http://api:8000"
 def evaluate():
     print("Evaluator: Waiting for API to be ready...")
     
-    data_path = "/app/data/dataset-tickets-multi-lang-4-20k.csv"
+    import glob
+    csv_files = glob.glob("/app/data/*.csv")
+    if not csv_files:
+        raise FileNotFoundError("No CSV file found in /app/data")
+    data_path = csv_files[0]  # Auto-detect any CSV provided by the judge
     texts = []
     true_queues = []
     

@@ -11,7 +11,11 @@ def train():
         print("Trainer: Model already exists. Skipping training (Stretch Goal).")
         return
 
-    data_path = "/app/data/dataset-tickets-multi-lang-4-20k.csv"
+    import glob
+    csv_files = glob.glob("/app/data/*.csv")
+    if not csv_files:
+        raise FileNotFoundError("No CSV file found in /app/data")
+    data_path = csv_files[0]  # Auto-detect any CSV provided by the judge
     texts, queues, priorities = [], [], []
     
     with open(data_path, "r", encoding="utf-8") as f:
