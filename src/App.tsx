@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from 'react';
-import { Terminal, Download, Server, Database, CheckCircle, Activity, FileText, CheckSquare, Square } from 'lucide-react';
+import { Terminal, Download, Server, Database, CheckCircle, Activity, FileText, CheckSquare, Square, Github } from 'lucide-react';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('instructions');
@@ -107,13 +107,50 @@ export default function App() {
                     </div>
                     
                     {/* Error Troubleshooting Box */}
-                    <div className="bg-red-950/30 border border-red-900/50 rounded p-3">
-                      <h4 className="text-red-400 font-medium text-sm mb-1">Troubleshooting: "no configuration file provided: not found"</h4>
-                      <p className="text-xs text-neutral-400">
-                        If you see this error, you are running the command in the wrong directory. You must <code>cd</code> into the unzipped folder that contains the <code>docker-compose.yml</code> file.
-                        <br/><br/>
-                        For example: <code>cd "C:\Users\admin\ticket hack\archive (3)"</code> (or whatever the folder extracted as). Check if the file is there by running <code>dir</code> (Windows) or <code>ls</code> (Mac).
-                      </p>
+                    <div className="bg-red-950/30 border border-red-900/50 rounded p-4 space-y-3">
+                      <div>
+                        <h4 className="text-red-400 font-medium text-sm mb-1">Troubleshooting: "no configuration file provided: not found"</h4>
+                        <p className="text-xs text-neutral-400">
+                          If you see this error, you are running the command in the wrong directory. You must <code>cd</code> into the unzipped folder that contains the <code>docker-compose.yml</code> file.
+                          <br/><br/>
+                          For example: <code>cd "C:\Users\admin\ticket hack\archive"</code>. Check if the file is there by running <code>dir</code> (Windows) or <code>ls</code> (Mac).
+                        </p>
+                      </div>
+                      
+                      <div className="border-t border-red-900/30 pt-3">
+                        <h4 className="text-red-400 font-medium text-sm mb-1">Troubleshooting: Docker daemon not running / Windows WSL</h4>
+                        <p className="text-xs text-neutral-400">
+                          If Docker fails to start or complains about the daemon on Windows, you must have <strong>Docker Desktop</strong> installed and running, backed by <strong>WSL 2</strong>. 
+                          <br/><br/>
+                          Run <code>wsl --install</code> in an Administrator PowerShell, reboot, and ensure Docker Desktop is open in your system tray before running compose.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex gap-4 p-4 bg-blue-950/20 border border-blue-900/50 rounded-lg mt-8">
+                  <div className="flex-shrink-0 mt-1">
+                    <Github className="w-5 h-5 text-blue-400" />
+                  </div>
+                  <div className="w-full">
+                    <h3 className="text-white font-medium mb-2">GitHub / Hackathon Judge Workflow</h3>
+                    <p className="text-sm text-neutral-400 mb-4">
+                      When you push this to GitHub, the judges (or your team) will clone it. Here is exactly what they will run to test your submission:
+                    </p>
+                    <div className="space-y-2">
+                      <div className="bg-neutral-950 p-3 rounded text-sm font-mono text-neutral-300 border border-neutral-800">
+                        <span className="text-neutral-500"># 1. Clone the repository</span><br/>
+                        git clone &lt;your-github-repo-url&gt;<br/><br/>
+                        <span className="text-neutral-500"># 2. Enter the directory</span><br/>
+                        cd &lt;your-repo-name&gt;<br/><br/>
+                        <span className="text-neutral-500"># 3. Add the dataset (CRITICAL)</span><br/>
+                        <span className="text-neutral-400 font-sans text-xs bg-neutral-900 p-1 rounded border border-neutral-700 block my-1">
+                          Make sure the dataset is placed in the <code>data/</code> folder. (If you didn't commit the 18MB CSV to GitHub, the judge MUST download it and put it in <code>data/dataset-tickets-multi-lang-4-20k.csv</code> before running.)
+                        </span><br/>
+                        <span className="text-neutral-500"># 4. Run the stack (This is what they grade you on)</span><br/>
+                        <span className="text-green-400">docker compose up --build</span>
+                      </div>
                     </div>
                   </div>
                 </div>
