@@ -1,0 +1,8 @@
+{
+  "name": "Ticket Triage Service Coach",
+  "description": "MLOps and ML Engineering coaching environment for the Containerized Ticket Triage Service project.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

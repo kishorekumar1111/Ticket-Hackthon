@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  trainer:
+    build: ./trainer
+    volumes:
+      - ./data:/app/data:ro
+      - model_data:/models
+
+  api:
+    build: ./api
+    ports:
+      - "8000:8000"
+    volumes:
+      - model_data:/models:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    depends_on:
+      trainer:
+        condition: service_completed_successfully
+
+  evaluator:
+    build: ./evaluator
+    volumes:
+      - ./data:/app/data:ro
+      - ./metrics:/app/metrics
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  model_data:
